@@ -14,7 +14,7 @@ public class CustomerService {
 
     private final CustomerRepostitory repo;
     private final RestTemplate template;
-    //private final FraudCleint fraudCleint;
+    // private final FraudCleint fraudCleint;
 
     public void registerCutomer(CustomerRegistrationRequest request) {
 
@@ -28,11 +28,10 @@ public class CustomerService {
         // repo.findById()
         FraudCheckResponse fraudCheckResponse = null;
         try {
-            fraudCheckResponse =
-            template.getForObject("http://FRAUD/api/v1/check_fraud/"+customer.getId(),
-            FraudCheckResponse.class);
+            fraudCheckResponse = template.getForObject("http://FRAUD/api/v1/check_fraud/" + customer.getId(),
+                    FraudCheckResponse.class);
 
-            //fraudCheckResponse = fraudCleint.checkFraud(customer.getId());
+            // fraudCheckResponse = fraudCleint.checkFraud(customer.getId());
 
         } catch (NullPointerException e) {
             throw new NullPointerException("No response received " + e.getMessage().toString());
@@ -41,6 +40,12 @@ public class CustomerService {
         if (fraudCheckResponse.isFraudster()) {
             throw new IllegalStateException("User is fraudster");
         }
+
+        //template.getForObject("http://NOTIFICATION/api/v1/notification" + customer.getId(), String.class);
+        NotificationRequest notificationRequest = new NotificationRequest(customer.getId(), customer.getEmail(),
+                String.format("Hi %s, welcome to Amigoscode...",
+                        customer.getFirstname()));
+        template.postForLocation("http://NOTIFICATION/api/v1/notification", notificationRequest);
 
     }
 

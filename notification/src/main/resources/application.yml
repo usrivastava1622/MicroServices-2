@@ -1,0 +1,20 @@
+server:
+    port: 8083
+spring:
+    application:
+        name: notification
+    datasource:
+        password: password
+        url: jdbc:postgresql://localhost:5432/notification
+        username: amigoscode
+        driver-class-name:
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+                format_sql: true
+        show-sql: true
+
+       
