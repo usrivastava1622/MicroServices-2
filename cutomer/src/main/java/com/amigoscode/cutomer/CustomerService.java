@@ -26,7 +26,7 @@ public class CustomerService {
         // repo.findById()
         FraudCheckResponse fraudCheckResponse = null;
         try {
-            fraudCheckResponse = template.getForObject("http://localhost:8081/api/v1/check_fraud/"+customer.getId(),
+            fraudCheckResponse = template.getForObject("http://FRAUD/api/v1/check_fraud/"+customer.getId(),
                     FraudCheckResponse.class);
 
         } catch (NullPointerException e) {
